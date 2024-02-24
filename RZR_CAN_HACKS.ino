@@ -1,5 +1,5 @@
 #include <SPI.h>
-#include <mcp_can.h>
+#include "mcp_can.h"
 
 
 //debug macros. if DEBUG is defined, then we will print things via serial. if DEBUG is not defined (i.e. the following line is commented out) we will not print things
