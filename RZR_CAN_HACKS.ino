@@ -13,7 +13,7 @@
 #define Serialprint
 #endif
 
-//initialize CAN library (9 for v1.1 and greater, 10 for v0.9b and v1.0)
+//initialize CAN library (9 for v1.1 and greater [confirmed working on v2], 10 for v0.9b and v1.0)
 MCP_CAN CAN(9);
 
 //GLOBALS
@@ -29,6 +29,9 @@ const unsigned long CAN_ID_RZR_SHIFTER = 0x18F00500; //the RZR CAN bus shifter a
 const unsigned long CAN_ID_RZR_SPEED   = 0x18FEF100; //the RZR CAN bus speed address (write)
 const unsigned long CAN_ID_RZR_RPM     = 0x18FF6600; //the RZR CAN bus RPM address (write)
 const unsigned long CAN_ID_RZR_CEL     = 0x18FECA00; //the RZR CAN bus check engine light (write)
+
+// Default values if we don't receive any data from the Curtis inverter
+const uint16_t DEFAULT_RPM = 1000;
 
 //CAN BUFFERS
 //the CAN buffer to turn off the check engine light
@@ -46,8 +49,8 @@ unsigned char rzrSpeedBuf[8] {
 };
 //RZR rpm buffer
 unsigned char rzrRPMBuf[8] = {
-  0x00, //lsb
-  0x00, //msb
+  DEFAULT_RPM & 0xFF, //lsb
+  (DEFAULT_RPM >> 8) & 0xFF, //msb
   0x00,
   0x00,
   0x00,
